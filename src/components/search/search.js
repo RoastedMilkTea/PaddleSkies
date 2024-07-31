@@ -30,13 +30,15 @@ const Search = ({ onSearchChange }) => {
   };
 
   return (
-    <AsyncPaginate
-      placeholder = "Search for specific city"
-      debounceTimeout = {500}
-      value = {search}
-      onChange = {handleOnChange}
-      loadOptions = {loadOptions}
-    />
+    <div className="async-paginate-container">
+      <AsyncPaginate
+        placeholder="Search for specific city"
+        debounceTimeout={500}
+        value={search}
+        onChange={handleOnChange}
+        loadOptions={loadOptions}
+      />
+    </div>
   );
 };
 
