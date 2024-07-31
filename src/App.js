@@ -3,12 +3,14 @@ import React, { useState } from 'react';
 import Forecast from './components/forecast/forecast';
 import Search from './components/search/search';
 import CurrentWeather from './components/current-weather/current-weather';
+import SignupForm from './components/signupform/signupform'; 
 import { WEATHER_API_URL, WEATHER_API_KEY } from './cityapi';
 import logo from './otherasset/dblogo.png';
 
 function App() {
   const [currentWeather, setCurrentWeather] = useState(null);
   const [forecast, setForecast] = useState(null);
+  const [user, setUser] = useState(null);
 
   const handleOnSearchChange = (searchData) => {
     const [lat, lon] = searchData.value.split(" ");
@@ -25,17 +27,22 @@ function App() {
         setForecast({ city: searchData.label, ...forecastResponse });
       })
       .catch((err) => console.error(err));
-  }
+  };
 
-  console.log(currentWeather);  
-  console.log(forecast);
+  const handleSignup = (user) => {
+    setUser(user);
+  };
 
   return (
     <div className="container">
       <div className="header">
-        <img src= {logo} alt="App Logo" className="logo" />
-        <Search className="search" onSearchChange={handleOnSearchChange} />
+        <img src={logo} alt="App Logo" className="logo" />
+        <div className="search-bar">
+          <Search onSearchChange={handleOnSearchChange} />
+        </div>
+        {user && <div className="user-info">Welcome, {user.name}</div>}
       </div>
+      {!user && <SignupForm onSignup={handleSignup} />}
       {currentWeather && <CurrentWeather data={currentWeather} />}
       {forecast && <Forecast data={forecast} />}
     </div>
@@ -43,4 +50,6 @@ function App() {
 }
 
 export default App;
+
+
 
